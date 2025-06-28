@@ -182,3 +182,7 @@ job-application-system/
 
 MIT © [Your Name or Team]
 
+👤 Seeded Users 
+Role	      Email	                    Password
+Admin	      admin@example.com	        admin123
+User	      test@example.com     	    password123
