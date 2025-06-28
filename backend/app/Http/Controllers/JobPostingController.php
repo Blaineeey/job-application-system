@@ -41,11 +41,20 @@ class JobPostingController extends Controller
 
     public function update(Request $request, JobPosting $jobPosting)
     {
-        $this->authorize('update', $jobPosting);
+        if ($jobPosting->user_id !== Auth::id() && !Auth::user()->is_admin) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
 
-        $jobPosting->update($request->only([
-            'title', 'description', 'location', 'salary', 'type', 'deadline'
-        ]));
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string',
+            'salary' => 'nullable|numeric',
+            'type' => 'required|in:Full-Time,Part-Time,Contract,Internship',
+            'deadline' => 'nullable|date',
+        ]);
+
+        $jobPosting->update($validated);
 
         return response()->json($jobPosting);
     }
