@@ -1,8 +1,18 @@
+import { Button, Container, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+
 export default function Landing() {
   return (
-    <section className="text-center">
-      <h1 className="text-4xl font-bold mb-4">Job Application System</h1>
-      <p className="text-lg">Manage your applications with ease.</p>
-    </section>
+    <Container maxWidth="sm" sx={{ mt: 8, textAlign: "center" }}>
+      <Typography variant="h4" gutterBottom>
+        Welcome to the Job Application System
+      </Typography>
+      <Button component={Link} to="/login" variant="contained" sx={{ m: 1 }}>
+        Login
+      </Button>
+      <Button component={Link} to="/register" variant="outlined" sx={{ m: 1 }}>
+        Register
+      </Button>
+    </Container>
   );
 }

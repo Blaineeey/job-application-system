@@ -1,29 +1,56 @@
-import { useState } from 'react';
-import api from '../api/axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { TextField, Button, Typography, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import api from "../api/axios";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await api.post('/login', { email, password });
-      localStorage.setItem('token', res.data.token);
-      navigate('/');
+      const res = await api.post("/login", form);
+      localStorage.setItem("token", res.data.token);
+      navigate("/dashboard");
     } catch (err) {
-      alert('Login failed');
+      if (err.response?.status === 422) {
+        alert("Invalid credentials.");
+      } else {
+        alert("Login failed.");
+      }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4">
-      <h2 className="text-2xl font-semibold">Login</h2>
-      <input className="border p-2 w-full" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-      <input className="border p-2 w-full" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-      <button className="bg-blue-600 text-white px-4 py-2" type="submit">Login</button>
-    </form>
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 8 }}>
+      <Typography variant="h5" mb={2}>Login</Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          name="email"
+          fullWidth
+          margin="normal"
+          onChange={handleChange}
+          required
+        />
+        <TextField
+          label="Password"
+          name="password"
+          type="password"
+          fullWidth
+          margin="normal"
+          onChange={handleChange}
+          required
+        />
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+          Login
+        </Button>
+      </form>
+    </Box>
   );
 }
