@@ -1,5 +1,6 @@
+// src/pages/Login.jsx
 import { useState } from "react";
-import { TextField, Button, Typography, Box } from "@mui/material";
+import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 
@@ -7,9 +8,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,29 +17,28 @@ export default function Login() {
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      if (err.response?.status === 422) {
-        alert("Invalid credentials.");
-      } else {
-        alert("Login failed.");
-      }
+      alert("Invalid credentials");
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: "auto", mt: 8 }}>
-      <Typography variant="h5" mb={2}>Login</Typography>
-      <form onSubmit={handleSubmit}>
+    <Container maxWidth="xs" sx={{ mt: 10 }}>
+      <Typography variant="h5" gutterBottom textAlign="center">
+        Login
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
         <TextField
-          label="Email"
           name="email"
+          label="Email"
+          type="email"
           fullWidth
           margin="normal"
           onChange={handleChange}
           required
         />
         <TextField
-          label="Password"
           name="password"
+          label="Password"
           type="password"
           fullWidth
           margin="normal"
@@ -50,7 +48,7 @@ export default function Login() {
         <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
           Login
         </Button>
-      </form>
-    </Box>
+      </Box>
+    </Container>
   );
 }
