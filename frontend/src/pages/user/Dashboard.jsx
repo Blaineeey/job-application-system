@@ -277,52 +277,6 @@ export default function UserDashboard() {
               🔍 Search Jobs
             </Button>
           </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={() => navigate("/dashboard/applications")}
-              sx={{
-                py: 2,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 500,
-                borderWidth: 2,
-                "&:hover": {
-                  borderWidth: 2,
-                  backgroundColor: "rgba(25, 118, 210, 0.04)",
-                  transform: "translateY(-2px)",
-                },
-                transition: "all 0.3s ease",
-              }}
-            >
-              📄 My Applications
-            </Button>
-          </Grid>
-
-          <Grid item xs={12} sm={6} md={4}>
-            <Button
-              variant="outlined"
-              fullWidth
-              onClick={() => navigate("/dashboard/profile")}
-              sx={{
-                py: 2,
-                borderRadius: 2,
-                textTransform: "none",
-                fontWeight: 500,
-                borderWidth: 2,
-                "&:hover": {
-                  borderWidth: 2,
-                  backgroundColor: "rgba(25, 118, 210, 0.04)",
-                  transform: "translateY(-2px)",
-                },
-                transition: "all 0.3s ease",
-              }}
-            >
-              👤 Update Profile
-            </Button>
-          </Grid>
         </Grid>
       </Paper>
     </Container>
