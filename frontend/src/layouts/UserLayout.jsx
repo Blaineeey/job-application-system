@@ -1,8 +1,14 @@
+import Navbar from "../components/Navbar";
+import { Container } from "@mui/material";
+import { Outlet } from "react-router-dom";
+
 export default function UserLayout({ children }) {
   return (
-    <div>
-      <h2 style={{ textAlign: "center" }}>User Dashboard</h2>
-      {children}
-    </div>
+    <>
+      <Navbar />
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
+        {children || <Outlet />}
+      </Container>
+    </>
   );
 }

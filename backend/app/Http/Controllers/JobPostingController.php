@@ -6,9 +6,11 @@ use App\Models\JobPosting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 class JobPostingController extends Controller
 {
     use AuthorizesRequests;
+
     public function index()
     {
         return JobPosting::latest()->get();
@@ -21,14 +23,13 @@ class JobPostingController extends Controller
             'description' => 'required|string',
             'location' => 'required|string',
             'salary' => 'nullable|numeric',
-            'type' => 'required|in:Full-Time,Part-Time,Internship',
+            'type' => 'required|in:Full-Time,Part-Time,Contract,Internship',
             'deadline' => 'nullable|date',
         ]);
 
-        $job = JobPosting::create([
-            ...$validated,
+        $job = JobPosting::create(array_merge($validated, [
             'user_id' => Auth::id(),
-        ]);
+        ]));
 
         return response()->json($job, 201);
     }
@@ -43,17 +44,28 @@ class JobPostingController extends Controller
         $this->authorize('update', $jobPosting);
 
         $jobPosting->update($request->only([
-            'title', 'description', 'location', 'salary', 'type', 'status', 'deadline'
+            'title', 'description', 'location', 'salary', 'type', 'deadline'
         ]));
 
         return response()->json($jobPosting);
     }
 
-    public function destroy(JobPosting $jobPosting)
+   public function destroy($id)
     {
-        $this->authorize('delete', $jobPosting);
-        $jobPosting->delete();
+        $job = JobPosting::find($id);
 
-        return response()->json(['message' => 'Job deleted']);
+        if (!$job) {
+            return response()->json(['message' => 'Job not found'], 404);
+        }
+
+        if ($job->delete()) {
+            return response()->json(['message' => 'Job deleted successfully'], 200);
+        }
+
+        return response()->json(['message' => 'Failed to delete job'], 500);
     }
+
+
+    
+
 }

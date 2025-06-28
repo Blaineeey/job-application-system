@@ -1,7 +1,13 @@
-// src/pages/Register.jsx
 import { useState } from "react";
-import { TextField, Button, Container, Typography, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Box,
+  Link as MuiLink
+} from "@mui/material";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../api/axios";
 
 export default function Register() {
@@ -72,6 +78,12 @@ export default function Register() {
         <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
           Register
         </Button>
+        <Typography textAlign="center" sx={{ mt: 2 }}>
+          Already have an account?{" "}
+          <MuiLink component={Link} to="/login">
+            Login
+          </MuiLink>
+        </Typography>
       </Box>
     </Container>
   );

@@ -1,8 +1,14 @@
+import Navbar from "../components/Navbar";
+import { Container } from "@mui/material";
+import { Outlet } from "react-router-dom";
+
 export default function AdminLayout({ children }) {
   return (
-    <div>
-      <h2 style={{ textAlign: "center" }}>Admin Panel</h2>
-      {children}
-    </div>
+    <>
+      <Navbar />
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
+        {children || <Outlet />}
+      </Container>
+    </>
   );
 }
