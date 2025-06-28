@@ -18,7 +18,7 @@ export default function UserJobList() {
         {jobs.map((job) => (
           <Grid item xs={12} md={6} lg={4} key={job.id}>
             <Card>
-              <CardActionArea onClick={() => navigate(`/jobs/${job.id}`)}>
+              <CardActionArea onClick={() => navigate(`/dashboard/jobs/${job.id}`)}>
                 <CardContent>
                   <Typography variant="h6">{job.title}</Typography>
                   <Typography variant="body2" color="text.secondary">

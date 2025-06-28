@@ -55,7 +55,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </ProtectedRoute>
             }
           />
-          <Route
+         <Route
             path="/dashboard/jobs/:id"
             element={
               <ProtectedRoute role="user">
@@ -107,6 +107,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               </ProtectedRoute>
             }
           />
+          <Route path="/admin/jobs/:id" 
+          element={
+          <JobDetails />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

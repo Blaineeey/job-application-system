@@ -1,18 +1,17 @@
-// src/pages/admin/jobs/JobDetails.jsx
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Typography, Box } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, Typography, Box, Button, Paper, Divider } from "@mui/material";
 import api from "../../../api/axios";
 
 export default function JobDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [job, setJob] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     api.get(`/jobs/${id}`)
       .then(res => {
-        console.log("Job fetched:", res.data);
         setJob(res.data);
       })
       .catch(err => {
@@ -25,15 +24,34 @@ export default function JobDetails() {
   if (!job) return <Typography>Loading...</Typography>;
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>{job.title}</Typography>
-      <Box sx={{ mb: 2 }}>
-        <Typography><strong>Location:</strong> {job.location}</Typography>
-        <Typography><strong>Type:</strong> {job.type}</Typography>
-        <Typography><strong>Salary:</strong> ₱{job.salary?.toLocaleString()}</Typography>
-        <Typography><strong>Deadline:</strong> {job.deadline}</Typography>
-      </Box>
-      <Typography variant="body1">{job.description}</Typography>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h4" fontWeight="bold" gutterBottom>
+          {job.title}
+        </Typography>
+
+        <Divider sx={{ mb: 2 }} />
+
+        <Box sx={{ mb: 3 }}>
+          <Typography variant="subtitle1" gutterBottom><strong>Location:</strong> {job.location}</Typography>
+          <Typography variant="subtitle1" gutterBottom><strong>Type:</strong> {job.type}</Typography>
+          <Typography variant="subtitle1" gutterBottom><strong>Salary:</strong> ₱{job.salary?.toLocaleString()}</Typography>
+          <Typography variant="subtitle1" gutterBottom><strong>Deadline:</strong> {job.deadline}</Typography>
+        </Box>
+
+        <Typography variant="h6" gutterBottom>Description</Typography>
+        <Typography variant="body1" sx={{ whiteSpace: "pre-line" }}>
+          {job.description}
+        </Typography>
+      </Paper>
+
+      <Button
+        variant="outlined"
+        sx={{ mt: 3 }}
+        onClick={() => navigate("/admin/jobs")}
+      >
+        ← Back to Job List
+      </Button>
     </Container>
   );
 }

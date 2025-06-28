@@ -34,10 +34,17 @@ class JobPostingController extends Controller
         return response()->json($job, 201);
     }
 
-    public function show(JobPosting $jobPosting)
+    public function show($id)
     {
-        return response()->json($jobPosting);
+        $job = JobPosting::find($id);
+
+        if (!$job) {
+            return response()->json(['message' => 'Job not found'], 404);
+        }
+
+        return response()->json($job);
     }
+
 
     public function update(Request $request, JobPosting $jobPosting)
     {
