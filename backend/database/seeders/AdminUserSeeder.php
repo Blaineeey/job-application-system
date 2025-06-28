@@ -10,12 +10,19 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::updateOrCreate(
-            ['email' => 'admin@example.com'],
-            [
-                'name' => 'Admin User',
-                'password' => Hash::make('secret123'),
-            ]
-        );
+        // Admin account
+        User::create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin123'), // Use a strong password in production
+            'is_admin' => true, // Add this field only if your User model/table supports it
+        ]);
+
+        // Regular test account
+        User::create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => Hash::make('password123'),
+        ]);
     }
 }
